@@ -9,7 +9,7 @@ public class DanceMoveExecutor : MonoBehaviour
     public IDanceMove[] AvailableMoves => cached_Moves ??= GetComponents<IDanceMove>();
     public bool IsDancing => ActiveMove != null;
 
-    private void UseMove(IDanceMove move)
+    public void UseMove(IDanceMove move)
     {
         if (ActiveMove != null) return;
         var moveIEnumerator = move is ILongDanceMove ? PerformLongMove(move.Perform(transform)) : move.Perform(transform);

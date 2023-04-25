@@ -1,6 +1,10 @@
-public class ShaderLightEffect : ILightingEffect
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ShaderLightEffect : MonoBehaviour, ILightingEffect
 {
-    public void UpdateLight(DiscoLight light)
+    private ComputeShader shader;
+    public void UpdateLights(IEnumerable<DiscoLight> lights)
     {
         
     }

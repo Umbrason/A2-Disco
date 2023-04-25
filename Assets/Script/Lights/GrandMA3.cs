@@ -7,7 +7,6 @@ public class GrandMA3
 
     void Update()
     {
-        foreach (var light in lights)
-            ActiveEffect?.UpdateLight(light);
+        ActiveEffect?.UpdateLights(lights);
     }
 }

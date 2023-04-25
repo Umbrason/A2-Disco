@@ -1,5 +1,7 @@
 
+using System.Collections.Generic;
+
 public interface ILightingEffect
 {
-     public void UpdateLight(DiscoLight light);
+     public void UpdateLights(IEnumerable<DiscoLight> lights);
 }

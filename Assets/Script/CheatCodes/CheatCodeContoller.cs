@@ -23,7 +23,6 @@ public class CheatCodeContoller : MonoBehaviour
     {
         if (input.Length == maxLength) input = input.Substring(1);
         input += char.ToLower(key);
-        Debug.Log(input);
 
         foreach (var cheatCode in cheatCodes)
         {

@@ -54,10 +54,32 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5545386434147542439, guid: 306a2f6a1f78c401cae166418f90aed5, type: 3}
       propertyPath: m_Name
-      value: Character
+      value: NPC
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5545386434147542439, guid: 306a2f6a1f78c401cae166418f90aed5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3896685896689051602}
   m_SourcePrefab: {fileID: 100100000, guid: 306a2f6a1f78c401cae166418f90aed5, type: 3}
+--- !u!1 &3218406952973729331 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5545386434147542439, guid: 306a2f6a1f78c401cae166418f90aed5, type: 3}
+  m_PrefabInstance: {fileID: 6944338997921913748}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3896685896689051602
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3218406952973729331}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 259cc1ec610ddc64bbb32c5ee4ff4da8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minDanceDelay: 2
+  maxDanceDelay: 5

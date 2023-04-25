@@ -7,6 +7,7 @@ public class DanceMoveExecutor : MonoBehaviour
     private Coroutine ActiveMove;
     private IDanceMove[] cached_Moves;
     public IDanceMove[] AvailableMoves => cached_Moves ??= GetComponents<IDanceMove>();
+    public bool IsDancing => ActiveMove != null;
 
     private void UseMove(IDanceMove move)
     {

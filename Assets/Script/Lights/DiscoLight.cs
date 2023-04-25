@@ -5,8 +5,8 @@ using UnityEngine.Rendering.Universal;
 [RequireComponent(typeof(Light2D), typeof(SpriteRenderer))]
 public class DiscoLight : MonoBehaviour
 {
-    private Light2D Light;
-    private SpriteRenderer SR;
+    [SerializeField] private Light2D Light;
+    [SerializeField] private SpriteRenderer SR;
 
     void Awake() => GrandMA3.lights.Add(this);
 

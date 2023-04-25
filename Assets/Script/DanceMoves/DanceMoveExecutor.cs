@@ -12,8 +12,8 @@ public class DanceMoveExecutor : MonoBehaviour
     private void UseMove(IDanceMove move)
     {
         if (ActiveMove != null) return;
-        var MoveIEnumerator = move is ILongDanceMove ? PerformLongMove(move.Perform(transform)) : move.Perform(transform);
-        ActiveMove = StartCoroutine(move.Perform(transform));
+        var moveIEnumerator = move is ILongDanceMove ? PerformLongMove(move.Perform(transform)) : move.Perform(transform);
+        ActiveMove = StartCoroutine(moveIEnumerator);
     }
 
     private IEnumerator PerformLongMove(IEnumerator moveEnumerator)

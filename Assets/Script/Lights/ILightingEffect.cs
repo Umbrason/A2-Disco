@@ -34,4 +34,23 @@ public interface ILightingEffect
         /// </summary>
         Keep,
     }
+
+    /// <summary>
+    /// The empty effect: does not update lights
+    /// </summary>     
+    public class Empty : ILightingEffect
+    {
+        private readonly ReplaceAction ReplaceAction;
+
+        Empty(ReplaceAction replaceAction = ReplaceAction.Cancel)
+        {
+            ReplaceAction = replaceAction;
+        }
+
+        public static Empty KeptWhenReplaced() => new Empty(ReplaceAction.Keep);
+
+        void ILightingEffect.UpdateLights(IEnumerable<DiscoLight> lights) { }
+
+        ReplaceAction ILightingEffect.OnReplaced() => ReplaceAction;
+    }
 }

@@ -22,9 +22,8 @@ public class DanceMoveExecutor : MonoBehaviour
 
     private IEnumerator PerformLongMove(IEnumerator moveEnumerator)
     {
-        //toggle lights
+        using var pauseLightsHandle = GrandMA3.SetEffect(ILightingEffect.Empty.KeptWhenReplaced());
         yield return moveEnumerator;
-        //toggle lights
     }
 
 }

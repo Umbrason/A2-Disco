@@ -13,7 +13,7 @@ public class SquidGameCheatCode : MonoBehaviour, ICheatCode
         if (activeEffect != null) return;
         activeEffect = new();
 
-        GrandMA3.ActiveEffect = activeEffect;
+        GrandMA3.SetEffect(activeEffect);
         DanceMoveExecutor.StartDancing += OnStartDancing;
         MovementController.Move += OnMove;
         StartCoroutine(ToggleLightColor());
@@ -56,5 +56,8 @@ public class SquidGameCheatCode : MonoBehaviour, ICheatCode
             foreach (var light in lights)
                 light.Color = color;
         }
+
+        // don't cancel the effect when replaced
+        ILightingEffect.ReplaceAction ILightingEffect.OnReplaced() => ILightingEffect.ReplaceAction.Keep;
     }
 }

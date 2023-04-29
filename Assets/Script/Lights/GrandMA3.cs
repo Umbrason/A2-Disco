@@ -40,6 +40,12 @@ public class GrandMA3 : MonoBehaviour
         ActiveEffect?.UpdateLights(lights);
     }
 
+    void OnDestroy()
+    {
+        foreach(var effect in effectStack) effect.OnCancelled();
+        effectStack.Clear();
+    }
+
     public readonly struct LightingEffectHandle : IDisposable
     {
         private readonly LinkedListNode<ILightingEffect> Node;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GerkLongDance : MonoBehaviour, IDanceMove, ILongDanceMove
+public class GerkLongDance : MonoBehaviour, ILongDanceMove
 {
     public IEnumerator Perform (Transform target)
     {

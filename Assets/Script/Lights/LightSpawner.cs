@@ -8,8 +8,11 @@ public class LightSpawner : MonoBehaviour
     public void Spawn()
     {
         var instance = Instantiate(Prefab);
-        var min = SpawnRegionCamera.cameraToWorldMatrix.MultiplyPoint(Vector2.zero)._xy();
-        var max = SpawnRegionCamera.cameraToWorldMatrix.MultiplyPoint(Vector2.one)._xy();
+        float halfw = SpawnRegionCamera.orthographicSize;
+        float halfh = SpawnRegionCamera.orthographicSize / SpawnRegionCamera.aspect;
+        var extends = new Vector2(halfw, halfh) * 2f;
+        var min = SpawnRegionCamera.transform.position._xy() - extends;
+        var max = SpawnRegionCamera.transform.position._xy() + extends;
         instance.transform.position = new Vector2(Random.Range(min.x, max.x), Random.Range(min.y, max.y));
     }
 }

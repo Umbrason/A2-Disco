@@ -22,6 +22,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "SpawnLight",
+                    "type": "Button",
+                    "id": "e9cd74c1-51a8-4570-b591-10e5562ef78a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -187,6 +196,17 @@
                     "processors": "Scale(factor=10)",
                     "groups": "",
                     "action": "SelectDanceMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e201b80-e7bd-40fe-a8f7-84dcf9982882",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpawnLight",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(MovementController), typeof(DanceMoveExecutor))]
+[RequireComponent(typeof(MovementController), typeof(DanceMoveExecutor), typeof(LightSpawner))]
 public class ControlsHandler : MonoBehaviour, Controls.IControlsMapActions
 {
     private Controls Input;
@@ -10,6 +10,9 @@ public class ControlsHandler : MonoBehaviour, Controls.IControlsMapActions
 
     private DanceMoveExecutor CachedDMExecutor;
     private DanceMoveExecutor DanceMoveExecutor => CachedDMExecutor ??= GetComponent<DanceMoveExecutor>();
+
+    private LightSpawner cached_lightSpawner;
+    private LightSpawner LightSpawner => cached_lightSpawner ??= GetComponent<LightSpawner>();
 
     public void Start()
     {
@@ -36,5 +39,11 @@ public class ControlsHandler : MonoBehaviour, Controls.IControlsMapActions
         var moves = DanceMoveExecutor.AvailableMoves;
         if (index < 0 || index >= moves.Length) return;
         DanceMoveExecutor.UseMove(moves[index]);
+    }
+
+    public void OnSpawnLight(InputAction.CallbackContext context)
+    {
+        if (context.performed) return;
+        LightSpawner.Spawn();
     }
 }

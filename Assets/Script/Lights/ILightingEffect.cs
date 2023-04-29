@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public interface ILightingEffect
 {
-    public void UpdateLights(IEnumerable<DiscoLight> lights);
+    public void UpdateLights(List<DiscoLight> lights);
 
     /// <summary>
     /// Called when the effect has been cancelled.
@@ -49,7 +49,7 @@ public interface ILightingEffect
 
         public static Empty KeptWhenReplaced() => new Empty(ReplaceAction.Keep);
 
-        void ILightingEffect.UpdateLights(IEnumerable<DiscoLight> lights) { }
+        void ILightingEffect.UpdateLights(List<DiscoLight> lights) { }
 
         ReplaceAction ILightingEffect.OnReplaced() => ReplaceAction;
     }

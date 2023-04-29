@@ -50,7 +50,7 @@ public class SquidGameCheatCode : MonoBehaviour, ICheatCode
     {
         public bool IsRed = false;
 
-        void ILightingEffect.UpdateLights(IEnumerable<DiscoLight> lights)
+        void ILightingEffect.UpdateLights(List<DiscoLight> lights)
         {
             var color = IsRed ? Color.red : Color.green;
             foreach (var light in lights)

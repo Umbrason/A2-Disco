@@ -1,0 +1,147 @@
+uniform float3 iResolution;
+uniform float  iTime;
+
+float t;
+#define T 6.283185307
+#define P T*.5
+
+float2x2 rot(in float a) { return float2x2(cos(a),sin(a),-sin(a),cos(a)); }
+
+float opSmoothUnion( float d1, float d2, float k ) {
+    float h = clamp( 0.5 + 0.5*(d2-d1)/k, 0.0, 1.0 );
+    return lerp( d2, d1, h ) - k*h*(1.0-h); }
+    
+#define orientedfloat2(a) float2(cos((a)),sin((a)))
+
+float petalDcp(in float2 uv, in float w)
+{
+	uv.x = abs(uv.x) + .25 + .25*w;
+	return length(uv) - .5;
+}
+
+float petal(in float3 p, in float m)
+{
+	float tt = t % P;
+
+	float ouv = m - .015;
+	float w = m;
+	float a = m;
+	const float b = .5;
+	p.y -= .45;
+	p.z -= b*1.;
+    p.zy = mul(p.zy, rot(ouv*2.));
+	float pDcp = petalDcp(p.xy, w);
+	p.x = abs(p.x);
+	p.xz = mul(p.xz, rot(-.25));
+	float c1 = length(p.yz) - b;
+	return max(max(pDcp, abs(c1) - .01), p.z);
+}
+
+float2 repRot(in float2 p, in float aIt)
+{
+	return mul(p, rot(-(T/aIt)) * floor((atan2(p.x, p.y)/T + .5)*aIt) - P - T/(aIt*2.));
+}
+
+float flower(in float3 p, in float aIt, in float m)
+{
+	p.xy = repRot(p.xy, aIt);
+	return petal(p, m);
+}
+
+int m;
+float df(in float3 pp) {
+    //pp.xz *= rot(t), pp.xy *= rot(t);
+    pp.y = -pp.y;
+
+    pp.xz = mul(pp.xz, rot(1.016));
+    pp.xy = mul(pp.xy, rot(-0.640));
+    
+    float dd = 10e9, ee = 10e9;
+    float3 p = pp;
+    
+    const float fsz = .25;
+    const float2 n = orientedfloat2(P*.125);
+    
+    bool b = false;
+    for(float g = 0.; g < 3.; g++)
+    {
+        p = (b = !b) ? p.xzy : p.zxy;
+        float r = length(p.xy);
+        float3 pp = float3(log(r) - t*(.1+((g+1.)*.051)), atan2(p.x, p.y) /*+ cos(sqrt(r))*.2*/, p.z/r);
+        float e = dot(pp.xy, n), f = dot(pp.xy, float2(n.y,-n.x));
+        {float k = 1.2021; e = fmod(e, k) - k*.5;}
+        float l = .65; f += 1.3; float i = fmod(floor(f/l) + g, 3.); f = fmod(f, l) - l*.5;
+        float d = (length(float2(e, pp.z)) - 0.015/r)*r;
+        bool j = i == 0.;
+        dd = opSmoothUnion(dd, d, .1);
+        float ff = flower(float3(e, f, pp.z + .06)/fsz, smoothstep(-1., 1., r*r)*(j ? 5. : 2.), smoothstep(1., -0., r*r))*fsz*r;
+        ee = min(ee, ff);
+        if(ee == ff) m = j ? 1 : 0;
+    }
+    
+    float ff = min(dd, ee);
+    if(ff == dd) m = 0;
+    return ff*.8;
+}
+
+#define MAX_D 30.
+#define MIN_D 0.
+#define LIM .0002
+#define MAX_IT 500
+float3 normal(in float3 p) { float d = df(p); float2 u = float2(0.,LIM); return normalize(float3(df(p + u.yxx),df(p + u.xyx),df(p + u.xxy)) - d); }
+
+struct rmRes { float3 p; int i; bool h; };
+rmRes rm(in float3 c, in float3 r)
+{
+    rmRes s;
+    s.p = c + r*MIN_D;
+    s.i = 0;
+    s.h = false;
+    float d;
+    for(s.i = 0; s.i < MAX_IT; s.i++) {
+        d = df(s.p);
+        if(d < LIM) { s.h = true; break; }
+        if(distance(c,s.p) > MAX_D) break;
+        s.p += d*r;
+    }
+    return s;
+}
+
+float3 mainImage(float2 fragCoord)
+{
+    float2 st = (fragCoord.xy - iResolution.xy*.5)/iResolution.x;
+    t = iTime;
+    
+    float3 c = float3(0.,0.,-10.), r = normalize(float3(st,1.));
+
+    rmRes res = rm(c,r);
+    
+    float3 sky = (float3(0.955,0.912,0.931) - dot(st,st)*.2);
+    float3 color = sky;
+    
+    if(res.h)
+    {
+        float3 n = normal(res.p);
+        const float3 ld = normalize(float3(0.,1.,-.1));
+        float d = max(0., dot(n, ld));
+        float s = pow(max(0., dot(r, reflect(ld, n))), 1.);
+        color = lerp(float3(0.500,0.763,0.915), float3(1,1,1), d);
+        color *= m == 1 ? float3(0.905,0.170,0.292) :float3(0.885,0.882,0.945);
+        // color += pow(float(res.i)*.005,2.);
+        color = lerp(color, sky, smoothstep(20., 25., distance(res.p, c)));
+        color = lerp(color, sky, smoothstep(0.5, 3., dot(st,st)*10.));
+    }
+
+    return color;
+}
+
+#pragma kernel lights
+StructuredBuffer<float2> _Positions;
+RWStructuredBuffer<float3> _Colors;
+
+[numthreads(1,1,1)]
+void lights (uint3 dtid : SV_DispatchThreadID)
+{
+    float3 color = mainImage(_Positions[dtid.x]);
+    _Colors[dtid.x] = color;
+}

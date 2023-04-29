@@ -317,6 +317,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5416509594543275832, guid: 01a8c09d92a224d9cb5c4606b1aab119, type: 3}
   m_PrefabInstance: {fileID: 1295274198}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1295274200 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5249524251067643922, guid: 01a8c09d92a224d9cb5c4606b1aab119, type: 3}
+  m_PrefabInstance: {fileID: 1295274198}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbbcb4a6fd3864313b3b0adc0de7b810, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1436010652
 GameObject:
   m_ObjectHideFlags: 0
@@ -327,6 +338,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1436010655}
   - component: {fileID: 1436010654}
+  - component: {fileID: 1436010658}
+  - component: {fileID: 1436010657}
+  - component: {fileID: 1436010656}
   m_Layer: 0
   m_Name: CheatCodeController
   m_TagString: Untagged
@@ -361,3 +375,41 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1436010656
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436010652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfd3188cfd9ff45cbaf3441b85970320, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1436010657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436010652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d296de525af7c406dacd0590ebca33e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DogeSprite: {fileID: 21300000, guid: 0d4f0a4b68920f7459fde8ad2d50ea20, type: 3}
+--- !u!114 &1436010658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436010652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 791097f94fa3847419317cb3900648ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NinjaMode: {fileID: 1295274200}

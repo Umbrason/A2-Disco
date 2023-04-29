@@ -18,6 +18,10 @@ public class ControlsHandler : MonoBehaviour, Controls.IControlsMapActions
         Input.Enable();
     }
     
+    void OnDestroy()
+    {
+        Input.Dispose();
+    }
 
     public void OnMove(InputAction.CallbackContext context)
     {

@@ -15,6 +15,9 @@ public class DanceMoveExecutor : MonoBehaviour
     private MovementController CachedMovementController;
     private MovementController MovementController => CachedMovementController ??= GetComponent<MovementController>();
 
+    private GlobalLightDimmer cached_GlobalLightDimmer;
+    private GlobalLightDimmer GlobalLightDimmer => cached_GlobalLightDimmer ??= GetComponent<GlobalLightDimmer>();
+
     public static event Action<DanceMoveExecutor, IDanceMove> StartDancing;
 
     public void UseMove(IDanceMove move)
@@ -48,7 +51,10 @@ public class DanceMoveExecutor : MonoBehaviour
     private IEnumerator PerformLongMove(IEnumerator moveEnumerator)
     {
         using var pauseLightsHandle = GrandMA3.SetEffect(new ILightingEffect.Empty());
-        yield return moveEnumerator;
+        var Brightness = GlobalLightDimmer?.Brightness ?? 0f;
+        if(GlobalLightDimmer) GlobalLightDimmer.Brightness = .01f;
+        yield return moveEnumerator;        
+        if(GlobalLightDimmer) GlobalLightDimmer.Brightness = Brightness;
         ActiveMove = null;
     }
 

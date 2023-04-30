@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class ShaderLightingEffect : MonoBehaviour, ILightingEffect
 {
-    [SerializeField] private ComputeShader shader;
+    [SerializeField] protected ComputeShader shader;
 
     public static Vector2 screenMin;
-    public static Vector2 screenMax;        
+    public static Vector2 screenMax;
 
     const int BATCHSIZE = 500;
 
@@ -66,6 +66,13 @@ public class ShaderLightingEffect : MonoBehaviour, ILightingEffect
         while (usedResources.Count > 0)
             availableResources.Enqueue(usedResources.Dequeue());
     }
+
+    void ILightingEffect.OnCancelled()
+    {
+        while (availableResources.Count > 0)
+            availableResources.Dequeue().Dispose();
+    }
+    ILightingEffect.ReplaceAction ILightingEffect.OnReplaced() => ILightingEffect.ReplaceAction.Cancel;
 
     void OnDestroy()
     {

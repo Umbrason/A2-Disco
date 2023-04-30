@@ -8,6 +8,11 @@ public class CSharkCheatCode : MonoBehaviour, ICheatCode
 
     [SerializeField]
     private Sprite CSharkSprite;
+    [SerializeField] private ShaderLightingEffect ShaderEffect;
 
-    public void Execute() => NPCSpriteOverrider.Toggle(CSharkSprite);
+    public void Execute()
+    {
+        NPCSpriteOverrider.Toggle(CSharkSprite);
+        if (ShaderEffect) GrandMA3.SetEffect(ShaderEffect);
+    }
 }

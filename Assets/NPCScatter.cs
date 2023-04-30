@@ -1,5 +1,6 @@
 
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.SceneTemplate;
 using UnityEngine;
@@ -9,7 +10,9 @@ public class NPCScatter : MonoBehaviour
     [SerializeField] private NPC npcTemplate;
     [SerializeField] private Sprite[] sprites;
 
-    float radius = 30f;
+    float radius = 45f / 2f;
+
+    private readonly List<Vector2> positions = new();
 
     public void Start()
     {
@@ -17,7 +20,16 @@ public class NPCScatter : MonoBehaviour
         {
             var npc = Instantiate(npcTemplate);
             npc.GetComponent<SpriteRenderer>().sprite = sprites[i];
-            npc.transform.position = Random.insideUnitCircle * radius;
+            while (true)
+            {
+                var pos = Random.insideUnitCircle * radius;
+                if (positions.Any(p => Vector2.Distance(pos, p) < 3f))
+                    continue;
+                positions.Add(pos);
+                npc.transform.position = pos;
+                break;
+            }
+
         }
     }
 

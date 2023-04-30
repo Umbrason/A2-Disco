@@ -164,3 +164,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Prefab: {fileID: 3726005511236312473, guid: 366f6cad549571641864d799d230b1a0, type: 3}
   SpawnRegionCamera: {fileID: 0}
+--- !u!114 &8405406167938251662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4762195425312139817}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e42f6eb8af12cde4bb175b6fa99001de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

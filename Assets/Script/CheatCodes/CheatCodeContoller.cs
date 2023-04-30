@@ -14,9 +14,14 @@ public class CheatCodeContoller : MonoBehaviour
         maxLength = cheatCodes.Select(cheatCode => cheatCode.Name.Length).Max();
     }
 
-    void Start()
+    void OnEnable()
     {
         Keyboard.current.onTextInput += onTextInput;
+    }
+
+    void OnDisable()
+    {
+        Keyboard.current.onTextInput -= onTextInput;
     }
 
     private void onTextInput(char key)

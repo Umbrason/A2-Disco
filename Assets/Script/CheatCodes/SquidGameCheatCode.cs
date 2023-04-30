@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(CheatCodeContoller))]
 public class SquidGameCheatCode : MonoBehaviour, ICheatCode
 {
     public string Name => "squidgame";
@@ -12,6 +13,9 @@ public class SquidGameCheatCode : MonoBehaviour, ICheatCode
     {
         if (activeEffect != null) return;
         activeEffect = new();
+
+        var cheatCodeController = GetComponent<CheatCodeContoller>();
+        cheatCodeController.enabled = false;
 
         GrandMA3.SetEffect(activeEffect).IWillNotClose();
         DanceMoveExecutor.StartDancing += OnStartDancing;

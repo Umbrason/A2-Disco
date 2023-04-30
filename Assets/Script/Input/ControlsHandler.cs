@@ -52,8 +52,7 @@ public class ControlsHandler : MonoBehaviour, Controls.IControlsMapActions
 
     public void OnDimLights(InputAction.CallbackContext context)
     {
-        float value = context.ReadValue<float>();
-        Debug.Log(value);
+        float value = -context.ReadValue<float>();
         GlobalLightDimmer.Brightness *= Mathf.Pow(1.1f, value);
     }
 }

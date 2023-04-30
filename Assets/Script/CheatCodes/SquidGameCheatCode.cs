@@ -56,8 +56,5 @@ public class SquidGameCheatCode : MonoBehaviour, ICheatCode
             foreach (var light in lights)
                 light.Color = color;
         }
-
-        // don't cancel the effect when replaced
-        ILightingEffect.ReplaceAction ILightingEffect.OnReplaced() => ILightingEffect.ReplaceAction.Keep;
     }
 }

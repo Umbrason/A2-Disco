@@ -34,7 +34,7 @@ public class DanceMoveExecutor : MonoBehaviour
     private IEnumerator PerformLongMove(IEnumerator moveEnumerator)
     {
         using var moveLock = MovementController.Lock();
-        using var pauseLightsHandle = GrandMA3.SetEffect(ILightingEffect.Empty.KeptWhenReplaced());
+        using var pauseLightsHandle = GrandMA3.SetEffect(new ILightingEffect.Empty());
         yield return moveEnumerator;
         ActiveMove = null;
     }

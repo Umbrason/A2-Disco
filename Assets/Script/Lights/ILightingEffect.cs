@@ -12,10 +12,10 @@ public interface ILightingEffect
 
     /// <summary>
     /// Called when the effect has been replaced.
-    /// If not overridden, the default implementation cancels the effect (<see cref="ReplaceAction.Cancel"/>).
+    /// If not overridden, the default implementation keeps the effect (<see cref="ReplaceAction.Keep"/>).
     /// </summary>
     /// <returns>What the light controller shoud do with this effect</returns>
-    public ReplaceAction OnReplaced() => ReplaceAction.Cancel;
+    public ReplaceAction OnReplaced() => ReplaceAction.Keep;
 
     /// <summary>
     /// Called when the effect is enabled for the first time or after it was previously replaced
@@ -42,12 +42,12 @@ public interface ILightingEffect
     {
         private readonly ReplaceAction ReplaceAction;
 
-        Empty(ReplaceAction replaceAction = ReplaceAction.Cancel)
+        public Empty(ReplaceAction replaceAction = ReplaceAction.Keep)
         {
             ReplaceAction = replaceAction;
         }
 
-        public static Empty KeptWhenReplaced() => new Empty(ReplaceAction.Keep);
+        public static Empty UntilReplaced() => new Empty(ReplaceAction.Cancel);
 
         void ILightingEffect.UpdateLights(List<DiscoLight> lights) { }
 

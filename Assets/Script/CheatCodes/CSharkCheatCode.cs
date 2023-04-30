@@ -12,7 +12,7 @@ public class CSharkCheatCode : MonoBehaviour, ICheatCode
 
     public void Execute()
     {
-        NPCSpriteOverrider.Toggle(CSharkSprite);
+        NPCSpriteOverrider.CurrentOverride = CSharkSprite;
         if (ShaderEffect) GrandMA3.SetEffect(ShaderEffect);
     }
 }

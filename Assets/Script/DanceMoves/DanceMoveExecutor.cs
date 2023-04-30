@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 [RequireComponent(typeof(MovementController))]
@@ -8,7 +9,7 @@ public class DanceMoveExecutor : MonoBehaviour
 {
     private IEnumerator ActiveMove;
     private IDanceMove[] cached_Moves;
-    public IDanceMove[] AvailableMoves => cached_Moves ??= GetComponents<IDanceMove>();
+    public IDanceMove[] AvailableMoves => cached_Moves ??= GetComponents<IDanceMove>().OrderBy(move => move is ILongDanceMove).ToArray();
     public bool IsDancing => ActiveMove != null;
 
     private MovementController CachedMovementController;

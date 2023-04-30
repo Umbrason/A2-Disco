@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor.SceneTemplate;
 using UnityEngine;
 
 public class NPCScatter : MonoBehaviour

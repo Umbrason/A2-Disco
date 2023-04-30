@@ -37,6 +37,7 @@ public class GatherCheatCode : MonoBehaviour, ICheatCode
             .Take(10)
             .OrderBy(_ => Random.value)
             .ToArray();
+        if (targets.Length == 0) return;
 
         var rotationStep = Quaternion.Euler(0, 0, 360f / targets.Length);
         var offset = Vector2.up * 7;

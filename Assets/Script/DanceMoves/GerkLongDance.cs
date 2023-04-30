@@ -6,8 +6,6 @@ public class GerkLongDance : MonoBehaviour, IDanceMove, ILongDanceMove
 {
     public IEnumerator Perform (Transform target)
     {
-        var originalRotation = target.rotation;
-
         for (int repeat = 0; repeat < 6; repeat++)
         {
             for (int i = 0; i < 11; i++)
@@ -58,7 +56,5 @@ public class GerkLongDance : MonoBehaviour, IDanceMove, ILongDanceMove
                 yield return new WaitForSeconds(.03f);
             }
         }
-
-        target.rotation = originalRotation;
     }
 }

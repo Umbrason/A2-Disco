@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(MovementController))]
 public class DanceMoveExecutor : MonoBehaviour
 {
-    private Coroutine ActiveMove;
+    private IEnumerator ActiveMove;
     private IDanceMove[] cached_Moves;
     public IDanceMove[] AvailableMoves => cached_Moves ??= GetComponents<IDanceMove>();
     public bool IsDancing => ActiveMove != null;
@@ -20,23 +20,39 @@ public class DanceMoveExecutor : MonoBehaviour
     {
         if (ActiveMove != null) return;
         StartDancing?.Invoke(this, move);
-        var moveIEnumerator = move is ILongDanceMove ? PerformLongMove(move.Perform(transform)) : PerformRegularMove(move.Perform(transform));
-        ActiveMove = StartCoroutine(moveIEnumerator);
+        
+        var moveIEnumerator = move.Perform(transform);
+        if (move is ILongDanceMove) moveIEnumerator = PerformLongMove(moveIEnumerator);
+        moveIEnumerator = WrapMove(moveIEnumerator);
+
+        ActiveMove = moveIEnumerator;
+        StartCoroutine(moveIEnumerator);
     }
 
-    private IEnumerator PerformRegularMove(IEnumerator moveEnumerator)
+    private IEnumerator WrapMove(IEnumerator moveEnumerator)
     {
+        using var transformReset = new TransformResetter(transform);
         using var moveLock = MovementController.Lock();
-        yield return moveEnumerator;
-        ActiveMove = null;
+
+        try
+        {
+            yield return moveEnumerator;
+        }
+        finally
+        {
+            ActiveMove = null;
+        }
     }
 
     private IEnumerator PerformLongMove(IEnumerator moveEnumerator)
     {
-        using var moveLock = MovementController.Lock();
         using var pauseLightsHandle = GrandMA3.SetEffect(new ILightingEffect.Empty());
         yield return moveEnumerator;
         ActiveMove = null;
     }
 
+    private void OnDisable()
+    {
+        if (ActiveMove is IDisposable disposable) disposable.Dispose();
+    }
 }

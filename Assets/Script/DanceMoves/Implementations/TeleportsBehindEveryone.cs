@@ -25,6 +25,7 @@ public class TeleportsBehindEveryone : MonoBehaviour, ILongDanceMove
             Instantiate(strikeVfx, victim.transform.position, Quaternion.identity);
             yield return new WaitForSeconds(.05f);
         }
+        if (target != null) target.transform.position = originalPosition;
         yield return new WaitForSeconds(.7f);
         foreach (var npc in NPCs)
         {
@@ -32,8 +33,6 @@ public class TeleportsBehindEveryone : MonoBehaviour, ILongDanceMove
             npc.gameObject.SetActive(false);
             Instantiate(vfx, npc.transform.position, Quaternion.identity);
         }
-        if (target == null) yield break;
-        target.transform.position = originalPosition;
         StartCoroutine(ReviveAll(NPCs));
     }
 

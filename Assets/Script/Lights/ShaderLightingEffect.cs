@@ -72,7 +72,6 @@ public class ShaderLightingEffect : MonoBehaviour, ILightingEffect
         while (availableResources.Count > 0)
             availableResources.Dequeue().Dispose();
     }
-    ILightingEffect.ReplaceAction ILightingEffect.OnReplaced() => ILightingEffect.ReplaceAction.Cancel;
 
     void OnDestroy()
     {

@@ -55,7 +55,6 @@ public class DanceMoveExecutor : MonoBehaviour
         if(GlobalLightDimmer) GlobalLightDimmer.Brightness = .01f;
         yield return moveEnumerator;        
         if(GlobalLightDimmer) GlobalLightDimmer.Brightness = Brightness;
-        ActiveMove = null;
     }
 
     private void OnDisable()

@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GerkLongDance : MonoBehaviour, IDanceMove, ILongDanceMove
 {
+    public float GatherDuration => 9f;
+
     public IEnumerator Perform (Transform target)
     {
         for (int repeat = 0; repeat < 6; repeat++)

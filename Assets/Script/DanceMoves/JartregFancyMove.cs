@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class JartregFancyMove : MonoBehaviour, IDanceMove, ILongDanceMove
 {
+    public float GatherDuration => 7f;
+
     public IEnumerator Perform(Transform target)
     {
         var originalScale = transform.localScale;

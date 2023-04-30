@@ -22,7 +22,12 @@ public class GatherCheatCode : MonoBehaviour, ICheatCode
 
     void OnStartDancing(DanceMoveExecutor executor, IDanceMove move)
     {
-        if (move is ILongDanceMove && Random.value > .6f) Gather(executor.transform.position._xy());
+        if (move is ILongDanceMove longMove)
+        {
+            var duration = longMove.GatherDuration;
+            if (duration > 0 && Random.value > .6f)
+                Gather(executor.transform.position._xy(), duration);
+        }
     }
 
     public void Execute() => Gather(player.transform.position._xy()); 

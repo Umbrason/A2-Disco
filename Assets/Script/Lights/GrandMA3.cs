@@ -9,6 +9,11 @@ public class GrandMA3 : MonoBehaviour
     private static LinkedList<ILightingEffect> effectStack = new();
     public static ILightingEffect ActiveEffect => effectStack.First?.Value;
 
+    void Start()
+    {
+        SetEffect(new RandomLightEffect());
+    }
+
     /// <summary>
     /// Set the currently active effect, possibly replacing another.
     /// </summary>

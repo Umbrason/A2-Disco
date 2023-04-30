@@ -15,7 +15,18 @@ public class TeleportsBehindEveryone : MonoBehaviour, ILongDanceMove
         var NPCs = rootObjects.SelectMany(obj => obj.GetComponentsInChildren<NPC>(false)).Where(NPC => NPC.gameObject.activeInHierarchy && NPC.transform != target).ToArray();
         if (NPCs.Length == 0) yield break;
         var originalPosition = target.transform.position;
+
+        var lastPos = target.transform.position;
+        var npcList = new List<NPC>(NPCs);
         var killQueue = new Queue<NPC>(NPCs);
+        while (npcList.Count > 0)
+        {
+            var nearest = npcList.OrderBy(npc => (npc.transform.position - lastPos)._xy().magnitude).First();
+            npcList.Remove(nearest);
+            lastPos = nearest.transform.position;
+            killQueue.Enqueue(nearest);
+        }
+
         while (killQueue.Count > 0)
         {
             var victim = killQueue.Dequeue();

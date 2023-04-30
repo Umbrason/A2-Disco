@@ -53,6 +53,15 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DimLights"",
+                    ""type"": ""Value"",
+                    ""id"": ""c91d214d-c446-453f-80b5-ac551d2353f5"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -231,6 +240,39 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""action"": ""SpawnLight"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""ccf3a237-1979-49f7-b430-79afc9e6996e"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DimLights"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""6570b5ab-f440-415a-8b87-afcc1ef02bdf"",
+                    ""path"": ""<Keyboard>/p"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DimLights"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""c0bf86e8-1b10-405c-aa45-03bad6946e2b"",
+                    ""path"": ""<Keyboard>/o"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DimLights"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -242,6 +284,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_ControlsMap_Move = m_ControlsMap.FindAction("Move", throwIfNotFound: true);
         m_ControlsMap_SelectDanceMove = m_ControlsMap.FindAction("SelectDanceMove", throwIfNotFound: true);
         m_ControlsMap_SpawnLight = m_ControlsMap.FindAction("SpawnLight", throwIfNotFound: true);
+        m_ControlsMap_DimLights = m_ControlsMap.FindAction("DimLights", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -304,6 +347,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private readonly InputAction m_ControlsMap_Move;
     private readonly InputAction m_ControlsMap_SelectDanceMove;
     private readonly InputAction m_ControlsMap_SpawnLight;
+    private readonly InputAction m_ControlsMap_DimLights;
     public struct ControlsMapActions
     {
         private @Controls m_Wrapper;
@@ -311,6 +355,7 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public InputAction @Move => m_Wrapper.m_ControlsMap_Move;
         public InputAction @SelectDanceMove => m_Wrapper.m_ControlsMap_SelectDanceMove;
         public InputAction @SpawnLight => m_Wrapper.m_ControlsMap_SpawnLight;
+        public InputAction @DimLights => m_Wrapper.m_ControlsMap_DimLights;
         public InputActionMap Get() { return m_Wrapper.m_ControlsMap; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -329,6 +374,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @SpawnLight.started -= m_Wrapper.m_ControlsMapActionsCallbackInterface.OnSpawnLight;
                 @SpawnLight.performed -= m_Wrapper.m_ControlsMapActionsCallbackInterface.OnSpawnLight;
                 @SpawnLight.canceled -= m_Wrapper.m_ControlsMapActionsCallbackInterface.OnSpawnLight;
+                @DimLights.started -= m_Wrapper.m_ControlsMapActionsCallbackInterface.OnDimLights;
+                @DimLights.performed -= m_Wrapper.m_ControlsMapActionsCallbackInterface.OnDimLights;
+                @DimLights.canceled -= m_Wrapper.m_ControlsMapActionsCallbackInterface.OnDimLights;
             }
             m_Wrapper.m_ControlsMapActionsCallbackInterface = instance;
             if (instance != null)
@@ -342,6 +390,9 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @SpawnLight.started += instance.OnSpawnLight;
                 @SpawnLight.performed += instance.OnSpawnLight;
                 @SpawnLight.canceled += instance.OnSpawnLight;
+                @DimLights.started += instance.OnDimLights;
+                @DimLights.performed += instance.OnDimLights;
+                @DimLights.canceled += instance.OnDimLights;
             }
         }
     }
@@ -351,5 +402,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnSelectDanceMove(InputAction.CallbackContext context);
         void OnSpawnLight(InputAction.CallbackContext context);
+        void OnDimLights(InputAction.CallbackContext context);
     }
 }

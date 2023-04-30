@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(MovementController), typeof(DanceMoveExecutor), typeof(LightSpawner))]
+[RequireComponent(typeof(MovementController), typeof(DanceMoveExecutor), typeof(LightSpawner)), RequireComponent(typeof(GlobalLightDimmer))]
 public class ControlsHandler : MonoBehaviour, Controls.IControlsMapActions
 {
     private Controls Input;
@@ -14,13 +14,16 @@ public class ControlsHandler : MonoBehaviour, Controls.IControlsMapActions
     private LightSpawner cached_lightSpawner;
     private LightSpawner LightSpawner => cached_lightSpawner ??= GetComponent<LightSpawner>();
 
+    private GlobalLightDimmer cached_GlobalLightDimmer;
+    private GlobalLightDimmer GlobalLightDimmer => cached_GlobalLightDimmer ??= GetComponent<GlobalLightDimmer>();
+
     public void Start()
     {
         Input = new();
         Input.ControlsMap.SetCallbacks(this);
         Input.Enable();
     }
-    
+
     void OnDestroy()
     {
         Input.Dispose();
@@ -45,5 +48,12 @@ public class ControlsHandler : MonoBehaviour, Controls.IControlsMapActions
     {
         if (context.performed) return;
         LightSpawner.Spawn();
+    }
+
+    public void OnDimLights(InputAction.CallbackContext context)
+    {
+        float value = context.ReadValue<float>();
+        Debug.Log(value);
+        GlobalLightDimmer.Brightness *= Mathf.Pow(2, value);
     }
 }

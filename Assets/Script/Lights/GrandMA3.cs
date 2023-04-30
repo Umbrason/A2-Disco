@@ -75,5 +75,19 @@ public class GrandMA3 : MonoBehaviour
             ActiveEffect?.OnEnable();
             if (wasActive) Node.Value.OnCancelled();
         }
+
+        /// <summary>
+        /// Indicates that this effect will never be cancelled manually and
+        /// clears the stack below this effect.
+        /// </summary>
+        public void IWillNotClose()
+        {
+            LinkedListNode<ILightingEffect> current;
+            while ((current = Node.Next) != null)
+            {
+                effectStack.Remove(current);
+                current.Value.OnCancelled();
+            }
+        }
     }
 }

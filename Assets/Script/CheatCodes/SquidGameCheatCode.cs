@@ -13,7 +13,7 @@ public class SquidGameCheatCode : MonoBehaviour, ICheatCode
         if (activeEffect != null) return;
         activeEffect = new();
 
-        GrandMA3.SetEffect(activeEffect);
+        GrandMA3.SetEffect(activeEffect).IWillNotClose();
         DanceMoveExecutor.StartDancing += OnStartDancing;
         MovementController.Move += OnMove;
         StartCoroutine(ToggleLightColor());

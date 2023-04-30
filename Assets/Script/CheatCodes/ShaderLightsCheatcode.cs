@@ -8,6 +8,6 @@ public class ShaderLightsCheatcode : MonoBehaviour, ICheatCode
 
     public void Execute()
     {
-        if (ShaderEffect) GrandMA3.SetEffect(ShaderEffect);
+        if (ShaderEffect) GrandMA3.SetEffect(ShaderEffect).IWillNotClose();
     }
 }

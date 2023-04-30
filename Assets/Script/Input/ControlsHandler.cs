@@ -54,6 +54,6 @@ public class ControlsHandler : MonoBehaviour, Controls.IControlsMapActions
     {
         float value = context.ReadValue<float>();
         Debug.Log(value);
-        GlobalLightDimmer.Brightness *= Mathf.Pow(2, value);
+        GlobalLightDimmer.Brightness *= Mathf.Pow(1.1f, value);
     }
 }

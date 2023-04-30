@@ -7,13 +7,7 @@ public class ShaderLightingEffect : MonoBehaviour, ILightingEffect
     [SerializeField] private ComputeShader shader;
 
     public static Vector2 screenMin;
-    public static Vector2 screenMax;
-
-    void Start()
-    {
-        GrandMA3.SetEffect(this);
-    }
-
+    public static Vector2 screenMax;        
 
     const int BATCHSIZE = 500;
 

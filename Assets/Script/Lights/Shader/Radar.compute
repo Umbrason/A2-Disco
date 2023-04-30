@@ -1,0 +1,39 @@
+#pragma kernel lights
+uniform float3 iResolution;
+uniform float  iTime;
+StructuredBuffer<float2> _Positions;
+RWStructuredBuffer<float3> _Colors;
+
+
+float2 rotateUV(float2 uv, float rotation)
+{
+    float mid = 0.0;
+    return float2(
+        cos(rotation) * (uv.x - mid) + sin(rotation) * (uv.y - mid) + mid,
+        cos(rotation) * (uv.y - mid) - sin(rotation) * (uv.x - mid) + mid
+    );
+}
+
+float3 main(float2 position)
+{
+    float2 uv = position / iResolution;
+    uv -= float2(.5, .5);
+    float a = (atan2(uv.y, uv.x) / 3.141 + 1) / 2;
+    a += iTime / 3;
+    a = fmod(a, 1);
+
+    a -= .9;
+    a = max(a, 0);
+    a /= .1;    
+    
+    return float3(0,a,0);
+}
+
+
+
+[numthreads(1,1,1)]
+void lights (uint3 dtid : SV_DispatchThreadID)
+{
+    float3 color = main(_Positions[dtid.x]);
+    _Colors[dtid.x] = color;
+}

@@ -1,0 +1,27 @@
+#pragma kernel lights
+uniform float3 iResolution;
+uniform float  iTime;
+StructuredBuffer<float2> _Positions;
+RWStructuredBuffer<float3> _Colors;
+
+
+float3 main(float2 position)
+{
+    float2 uv = position / iResolution;    
+    float d = dot(position, float2(.707, .707));    
+    
+    float s = sin(d + iTime);
+    float c = cos(d + iTime);
+    float sinv = -sin(d + iTime);
+
+    return float3(s,c,sinv);
+}
+
+
+
+[numthreads(1,1,1)]
+void lights (uint3 dtid : SV_DispatchThreadID)
+{
+    float3 color = main(_Positions[dtid.x]);
+    _Colors[dtid.x] = color;
+}

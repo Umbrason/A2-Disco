@@ -28,6 +28,6 @@ public class NinjaMode : MonoBehaviour
         }
 
         if (active)
-            slowdownEffect = VelocityController.AddSlowdownEffect(0.5f, float.PositiveInfinity, 1);
+            slowdownEffect = VelocityController.AddSlowdownEffect(0.5f, float.PositiveInfinity, 10);
     }
 }
